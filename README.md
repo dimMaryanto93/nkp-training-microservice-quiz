@@ -83,7 +83,7 @@ goals:
 show me the response with this request
 
 ```bash
-curl --location '10.38.103.52' \
+curl --location '10.38.103.52/api/order/v1/checkout' \
 --header 'Content-Type: application/json; charset=UTF-8' \
 --header 'Host: dimas.microservice.nutanix.local' \
 --data '{
