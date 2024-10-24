@@ -62,6 +62,22 @@ tasklist:
 - create kubernetes manifest for deployment, service, configmap/secret and ingress
 - create ingress with surefix `<your-name>.microservice.nutanix.local`
 
+information:
+```yaml
+- PostgreSQL:
+    user: postgres
+    password: nutanix/4u
+    dbname: order_api
+    ip: 10.38.103.120
+    port: 5432
+- MySQL:
+    user: root
+    password: nutanix/4u
+    dbname: customer_api
+    ip: 10.38.103.105 
+    port: 3306
+```
+
 goals:
 show me the response with this request
 
