@@ -48,3 +48,27 @@ Timeout: 3s
   "qty": "2"
 }
 ```
+
+## Deploy to kubernetes
+
+Please deploy to kubernetes cluster by your namespace
+
+tasklist: 
+
+- create kubernetes manifest template with kustomization, put in `kubernetes` folder
+- create kubernetes manifest for deployment, service, configmap/secret and ingress
+- create ingress with surefix `<your-name>.microservice.nutanix.local`
+
+goals:
+show me the response with this request
+
+```bash
+curl --location '10.38.103.52' \
+--header 'Content-Type: application/json; charset=UTF-8' \
+--header 'Host: dimas.microservice.nutanix.local' \
+--data '{
+  "userId": "cust01",
+  "item": "Macbook Pro 13\" (A1723)",
+  "qty": "2"
+}'
+```
