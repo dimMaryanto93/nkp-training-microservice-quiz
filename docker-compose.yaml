@@ -25,8 +25,7 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
   customer-api:
-    image: 10.38.103.61:8087/<your-name>/customer-api:v3
-    platform: amd64
+    image: 10.38.103.61:8087/mandiri-inhealth/customer-api:v3
     build:
       dockerfile: Dockerfile
       context: ./customer
@@ -55,8 +54,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
   order-api:
-    image: 10.38.103.61:8087/<your-name>/order-api:v3
-    platform: amd64
+    image: 10.38.103.61:8087/mandiri-inhealth/order-api:v3
     build:
       dockerfile: Dockerfile
       context: ./orders
