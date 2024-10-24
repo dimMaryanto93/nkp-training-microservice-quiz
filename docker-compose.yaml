@@ -1,0 +1,77 @@
+version: '3.9'
+volumes:
+  pg_data: { }
+  mysql_data: { }
+services:
+  packager:
+    image: maven:3-eclipse-temurin-17-alpine
+    platform: amd64
+    working_dir: /apps
+    entrypoint: mvn
+    command: clean package -DskipTests
+    volumes:
+      - ./:/apps
+    profiles:
+      - build
+  postgres:
+    image: 10.38.103.61:8086/postgres:15
+    platform: amd64
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=order4p1
+      - POSTGRES_USER=order4p1
+      - POSTGRES_DB=order4p1
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+  customer-api:
+    image: 10.38.103.61:8087/<your-name>/customer-api:v3
+    platform: amd64
+    build:
+      dockerfile: Dockerfile
+      context: ./customer
+      args:
+        - JAR_FILE=customer-api.jar
+    environment:
+      - DATABASE_USER=customer4p1
+      - DATABASE_PASSWORD=customer4p1
+      - DATABASE_NAME=customer4p1
+      - DATABASE_HOST=mysql
+      - DATABASE_PORT=3306
+    ports:
+      - "9090:9090"
+    depends_on:
+      - mysql
+  mysql:
+    image: 10.38.103.61:8086/mysql:8.0
+    platform: amd64
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootPasswordnyaApa
+      - MYSQL_DATABASE=customer4p1
+      - MYSQL_USER=customer4p1
+      - MYSQL_PASSWORD=customer4p1
+    volumes:
+      - mysql_data:/var/lib/mysql
+  order-api:
+    image: 10.38.103.61:8087/<your-name>/order-api:v3
+    platform: amd64
+    build:
+      dockerfile: Dockerfile
+      context: ./orders
+      args:
+        - JAR_FILE=orders-api.jar
+    ports:
+      - "9091:9091"
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_USER=order4p1
+      - DATABASE_PASSWORD=order4p1
+      - DATABASE_NAME=order4p1
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - SERVICE_CUSTOMER_HOST=customerAPI
+      - SERVICE_CUSTOMER_PORT=9090
+      - SERVICE_CUSTOMER_PROTO=http
