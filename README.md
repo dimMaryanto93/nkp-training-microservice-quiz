@@ -55,6 +55,9 @@ Please deploy to kubernetes cluster by your namespace
 
 tasklist: 
 
+- compile source-code to image using `packager` service inside docker-compose
+- build docker image from docker compose, please edit `<your-name>` in docker-compose.yaml
+- publish/push docker image have you build to nexus oss
 - create kubernetes manifest template with kustomization, put in `kubernetes` folder
 - create kubernetes manifest for deployment, service, configmap/secret and ingress
 - create ingress with surefix `<your-name>.microservice.nutanix.local`
